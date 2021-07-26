@@ -3,6 +3,16 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# sqlite
+open-hotel.db
+open-hotel.db-journal
+
+# notebooks
+test-notebook.ipynb
+
+# todo
+TODO
+
 # C extensions
 *.so
 

@@ -1,11 +1,16 @@
 [/] Define structure
     [X] Users
+        [X] Create
+        [X] Get
     [X] Hotels
+        [X] Create
+        [X] Get    
     [X] Rooms
-
-[ ] Availability side
-
-[ ] Rates side
-
-[ ] Distribution side
+        [X] Create
+        [X] Get    
+    [X] RatePlans
+    [X] Availability
+    [X] Clients
+        [ ] Create
+        [ ] Get
 

@@ -10,7 +10,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -19,6 +18,7 @@ def get_db():
     finally:
         db.close()
 
+# users
 
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -41,18 +41,36 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-"""
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
+# agents
+
+@app.post("/agents/", response_model=schemas.Agent)
+def create_agent(agent: schemas.AgentCreate, db: Session = Depends(get_db)
 ):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
-"""
+    db_agent = crud.get_agent_by_name(db, agent_name=agent.agent_name)
+    if db_agent:
+        raise HTTPException(status_code=400, detail="Agent already exists")
+    return crud.create_agent(db=db, agent=agent)
+
+
+@app.get("/agents/", response_model=List[schemas.Agent])
+def read_agents(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    agents = crud.get_agents(db, skip=skip, limit=limit)
+    return agents
+
+@app.get("/agents/{agent_id}")
+def read_agent(agent_id: int, db: Session = Depends(get_db)):
+    db_agent = crud.get_agent(db, agent_id=agent_id)
+    if db_agent is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_agent
+
+# hotels
+
 @app.post("/hotels/", response_model=schemas.Hotel)
 def create_hotel(
     hotel: schemas.HotelCreate, db: Session = Depends(get_db)
 ):
-    db_hotel = crud.get_(db, hotel_name=hotel.hotel_name)
+    db_hotel = crud.get_hotel_by_name(db, hotel_name=hotel.hotel_name)
     if db_hotel:
         raise HTTPException(status_code=400, detail="Hotel already exists")
     return crud.create_hotel(db=db, hotel=hotel)
@@ -62,6 +80,9 @@ def create_hotel(
 def read_hotels(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     hotels = crud.get_hotels(db, skip=skip, limit=limit)
     return hotels
+
+
+# rooms
 
 @app.post("/hotels/{hotel_id}/rooms/", response_model=schemas.Room)
 def create_room_for_hotel(

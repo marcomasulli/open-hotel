@@ -12,6 +12,7 @@ fastapi==0.66.0
 graphene==2.1.9
 graphql-core==2.3.2
 graphql-relay==2.0.1
+greenlet==1.1.0
 h11==0.12.0
 idna==3.2
 itsdangerous==1.1.0
@@ -26,6 +27,7 @@ PyYAML==5.4.1
 requests==2.26.0
 Rx==1.6.1
 six==1.16.0
+SQLAlchemy==1.4.22
 starlette==0.14.2
 typing-extensions==3.10.0.0
 ujson==4.0.2

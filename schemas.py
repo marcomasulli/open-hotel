@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -18,6 +19,33 @@ class User(UserBase):
     
     class Config:
         orm_mode = True
+# Agents
+
+class AgentBase(BaseModel):
+    agent_name: str
+    agent_address: str
+    agent_country: str
+    agent_province: str
+    agent_location: str
+    agent_phone: str
+    agent_email: str
+    agent_contact_person: str
+    agent_type: str
+    agent_model: str
+    agent_commission: float
+    agent_discount: float
+
+class AgentCreate(AgentBase):
+    pass
+
+
+class Agent(AgentBase):
+    id: int
+    agent_is_active: bool
+    
+    class Config:
+        orm_mode = True
+
 
 # Hotels
 
@@ -28,8 +56,8 @@ class HotelBase(BaseModel):
     hotel_province: str
     hotel_location: str
     hotel_rooms: Optional[str] = None
-    hotel_latitude: str
-    hotel_longitude: str
+    hotel_latitude: Optional[str] = None
+    hotel_longitude: Optional[str] = None
     hotel_phone: str
     hotel_email: str
     hotel_contact_person: Optional[str] = None
@@ -49,6 +77,7 @@ class Hotel(HotelBase):
         orm_mode = True
 
 # Rooms
+
 class RoomBase(BaseModel):
     room_name: str
     room_description: Optional[str]
@@ -68,6 +97,44 @@ class Room(RoomBase):
     id: int
     hotel_id: int
     room_is_active: bool
+
+    class Config:
+        orm_mode = True
+
+# Rates
+
+class RatePlanBase(BaseModel):
+    valid_from: datetime
+    valid_to: datetime
+    rate: float
+
+class RatePlanCreate(RatePlanBase):
+    pass
+
+class RatePLan(RatePlanBase):
+    id: int
+    hotel_id: int
+    room_id: int
+    rate_is_active: bool
+
+    class Config:
+        orm_mode = True
+
+# Availability
+
+class AvailabilityBase(BaseModel):
+    valid_from: datetime
+    valid_to: datetime
+    total_rooms: int
+    remaining_rooms: int
+
+class AvailabilityCreate(AvailabilityBase):
+    pass
+
+class Availability(AvailabilityBase):
+    id: int
+    hotel_id: int
+    room_id: int
 
     class Config:
         orm_mode = True
