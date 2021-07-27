@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from datetime import datetime
 from . import models, schemas
 
 # Users
@@ -63,3 +63,21 @@ def create_hotel_room(db: Session, room: schemas.RoomCreate, hotel_id: int):
     db.commit()
     db.refresh(db_room)
     return db_room
+
+# Rates
+
+def get_rateplans(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.RatePlan).offset(skip).limit(limit).all()
+
+def get_hotel_rateplan(db: Session, hotel_id: int):
+    return db.query(models.RatePlan).filter(models.RatePlan.hotel_id == hotel_id).all()
+
+def get_room_rateplan(db: Session, room_id: int):
+    return db.query(models.RatePlan).filter(models.RatePlan.room_id == room_id).all()
+
+def create_rateplan(db: Session, rateplan: schemas.RatePlan, hotel_id: int, room_id: int):
+    db_rateplan = models.RatePlan(**rateplan.dict(), hotel_id=hotel_id, room_id=room_id)
+    db.add(db_rateplan)
+    db.commit()
+    db.refresh(db_rateplan)
+    return db_rateplan

@@ -111,7 +111,7 @@ class RatePlanBase(BaseModel):
 class RatePlanCreate(RatePlanBase):
     pass
 
-class RatePLan(RatePlanBase):
+class RatePlan(RatePlanBase):
     id: int
     hotel_id: int
     room_id: int

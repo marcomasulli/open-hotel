@@ -94,3 +94,26 @@ def create_room_for_hotel(
 def read_rooms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     rooms = crud.get_rooms(db, skip=skip, limit=limit)
     return rooms
+
+# rates
+
+@app.post("/hotels/{hotel_id}/rooms/{room_id}/rateplans", response_model=schemas.RatePlan)
+def create_rateplan(
+    hotel_id: int, room_id: int, rateplan: schemas.RatePlan, db: Session = Depends(get_db)
+):
+    return crud.create_hotel_room(db=db, rateplan=rateplan, room_id=room_id, hotel_id=hotel_id)
+
+@app.get("hotels/{hotel_id}/rateplans/", response_model=List[schemas.RatePlan])
+def read_rateplans_by_hotel_id(hotel_id: int, db: Session = Depends(get_db)):
+    rateplans = crud.get_hotel_rateplan(db, hotel_id=hotel_id)
+    return rateplans
+
+@app.get("rooms/{room_id}/rateplans/", response_model=List[schemas.RatePlan])
+def read_rateplans_by_room_id(room_id: int, db: Session = Depends(get_db)):
+    rateplans = crud.get_room_rateplan(db, room_id=room_id)
+    return rateplans
+
+@app.get("/rateplans/", response_model=List[schemas.RatePlan])
+def read_rateplans(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    rateplans = crud.get_rateplans(db, skip=skip, limit=limit)
+    return rateplans

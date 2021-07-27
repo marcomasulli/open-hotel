@@ -67,7 +67,6 @@ class Room(Base):
     room_is_active = Column(Boolean, default=True)
 
     hotel = relationship("Hotel", back_populates="rooms")
-
 class RatePlan(Base):
     __tablename__ = "rates"
 
