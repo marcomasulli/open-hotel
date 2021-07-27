@@ -9,9 +9,11 @@
         [X] Create
         [X] Get    
     [X] RatePlans
-        [ ] Create
-        [ ] Get
+        [X] Create
+        [X] Get
     [X] Availability
+        [X] Create
+        [X] Get    
     [X] Agents
         [X] Create
         [X] Get

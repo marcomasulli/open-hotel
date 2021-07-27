@@ -81,3 +81,22 @@ def create_rateplan(db: Session, rateplan: schemas.RatePlan, hotel_id: int, room
     db.commit()
     db.refresh(db_rateplan)
     return db_rateplan
+
+# Availability
+
+def get_availability(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Availability).offset(skip).limit(limit).all()
+
+def get_room_availability(db: Session, room_id: int):
+    return db.query(
+        models.Availability
+        ).filter(
+            models.Availability.room_id == room_id
+        ).all()
+
+def create_availability(db: Session, availability: schemas.Availability, hotel_id: int, room_id: int):
+    db_availability = models.Availability(**availability.dict(), hotel_id=hotel_id, room_id=room_id)
+    db.add(db_availability)
+    db.commit()
+    db.refresh(db_availability)
+    return db_availability

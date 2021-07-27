@@ -101,7 +101,7 @@ def read_rooms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 def create_rateplan(
     hotel_id: int, room_id: int, rateplan: schemas.RatePlan, db: Session = Depends(get_db)
 ):
-    return crud.create_hotel_room(db=db, rateplan=rateplan, room_id=room_id, hotel_id=hotel_id)
+    return crud.create_rateplan(db=db, rateplan=rateplan, room_id=room_id, hotel_id=hotel_id)
 
 @app.get("hotels/{hotel_id}/rateplans/", response_model=List[schemas.RatePlan])
 def read_rateplans_by_hotel_id(hotel_id: int, db: Session = Depends(get_db)):
@@ -116,4 +116,16 @@ def read_rateplans_by_room_id(room_id: int, db: Session = Depends(get_db)):
 @app.get("/rateplans/", response_model=List[schemas.RatePlan])
 def read_rateplans(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     rateplans = crud.get_rateplans(db, skip=skip, limit=limit)
+    return rateplans
+
+# availability
+@app.post("/hotels/{hotel_id}/rooms/{room_id}/availability", response_model=schemas.RatePlan)
+def set_availability(
+    hotel_id: int, room_id: int, availability: schemas.Availability, db: Session = Depends(get_db)
+):
+    return crud.create_availability(db=db, availability=availability, room_id=room_id, hotel_id=hotel_id)
+
+@app.get("rooms/{room_id}/availability/", response_model=List[schemas.Availability])
+def read_availability_by_room_id(room_id: int, db: Session = Depends(get_db)):
+    rateplans = crud.get_room_availability(db, room_id=room_id)
     return rateplans
