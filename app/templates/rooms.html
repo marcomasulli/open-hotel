@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Rooms {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      Rooms
+    </p>
+  </div>
+</section>
+<div class="container" style="overflow-x: auto; white-space: nowrap;">
+    {% if rooms %}
+    <table class="table">
+      <thead>
+        <tr>
+          {% for column in rooms[0].keys() %}  
+          <th> {{ column }} </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for room in rooms %}
+        <tr>
+          {% for value in room.values() %}
+           <td> {{ value }} </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No Rooms</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        There seems to be <strong>no Room</strong> here, are you sure you do not need to create a new one?
+      </div>
+    </article>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/base-style.css">
+    {% endblock %}
+  </head>
+  <body class="main">
+    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        {% if logo %}
+        <a class="navbar-item" href="{{url_for('home')}}">
+          <img src="#" width="112" height="28">
+        </a>
+        {% endif %}
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasic" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="{{url_for('home')}}">
+            Home
+          </a>
+          <!-- Users -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Users
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Users
+              </a>
+              <a class="navbar-item">
+                Create User
+              </a>
+            </div>
+          </div>
+          <!-- Agents -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Agents
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Agents
+              </a>
+              <a class="navbar-item">
+                Create Agent
+              </a>
+            </div>
+          </div>
+          <!-- Hotels -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Hotels
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Hotels
+              </a>
+              <a class="navbar-item">
+                Create Hotel
+              </a>
+            </div>
+          </div>
+          <!-- Rooms -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Rooms
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Rooms
+              </a>
+              <a class="navbar-item">
+                Create Room
+              </a>
+            </div>
+          </div>
+          <!-- Rateplans -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Rateplans
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Rateplans
+              </a>
+              <a class="navbar-item">
+                Create Rateplan
+              </a>
+            </div>
+          </div>
+          <!-- Availability -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Availability
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                View Availability
+              </a>
+              <a class="navbar-item">
+                Create Availability
+              </a>
+            </div>
+          </div>          
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Documentation</strong>
+              </a>
+              <a class="button is-light">
+                Log in
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

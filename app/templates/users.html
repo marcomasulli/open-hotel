@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Users {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      Users
+    </p>
+  </div>
+</section>
+<div class="container" style="overflow-x: auto; white-space: nowrap;">
+    {% if users %}
+    <table class="table">
+      <thead>
+        <tr>
+          {% for column in users[0].keys() %}  
+          <th> {{ column }} </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          {% for value in user.values() %}
+           <td> {{ value }} </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No User</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        There seems to be <strong>no User</strong> here, are you sure you do not need to create a new one?
+      </div>
+    </article>
+    {% endif %}
+</div>
+
+{% endblock %}
