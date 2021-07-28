@@ -49,7 +49,9 @@ class Hotel(Base):
     hotel_contact_email = Column(String)
     hotel_is_active = Column(Boolean, default=False)
 
-    rooms = relationship("Room", back_populates="hotel")
+    rooms = relationship("Room", back_populates="hotels")
+    rateplans = relationship("RatePlan", back_populates="hotels")
+    availability = relationship("Availability", back_populates="hotels")
 
 class Room(Base):
     __tablename__ = "rooms"
@@ -67,6 +69,8 @@ class Room(Base):
     room_is_active = Column(Boolean, default=True)
 
     hotel = relationship("Hotel", back_populates="rooms")
+    rateplans = relationship("RatePlan", back_populates="rooms")
+    availability = relationship("Availability", back_populates="rooms")
 class RatePlan(Base):
     __tablename__ = "rates"
 
@@ -78,6 +82,8 @@ class RatePlan(Base):
     rate = Column(Float)
     rate_is_active = Column(Boolean, default=True)
     
+    hotel = relationship("Hotel", back_populates="rates")
+    room = relationship("Room", back_populates="rates")
 class Availability(Base):
     __tablename__ = "availability"
 
@@ -88,3 +94,7 @@ class Availability(Base):
     valid_to = Column(DateTime)
     total_rooms = Column(Integer)
     remaining_rooms = Column(Integer)
+    is_open = Column(Boolean)
+
+    hotel = relationship("Hotel", back_populates="availability")
+    room = relationship("Room", back_populates="availability")

@@ -123,18 +123,19 @@ class RatePlan(RatePlanBase):
 # Availability
 
 class AvailabilityBase(BaseModel):
-    valid_from: datetime
-    valid_to: datetime
+    hotel_id: int
+    room_id: int
+    valid_from: str
+    valid_to: str
     total_rooms: int
     remaining_rooms: int
+    is_open: Optional[bool] = False
 
 class AvailabilityCreate(AvailabilityBase):
     pass
 
 class Availability(AvailabilityBase):
     id: int
-    hotel_id: int
-    room_id: int
 
     class Config:
         orm_mode = True

@@ -1,4 +1,4 @@
-[/] Define structure
+[X] Define structure
     [X] Users
         [X] Create
         [X] Get
@@ -17,4 +17,13 @@
     [X] Agents
         [X] Create
         [X] Get
+    [ ] Bookings
+        [ ] Create
+        [ ] Get
 
+Backend:
+
+[ ] Users: password hashing and creation mechanism
+[ ] Rates & Availability
+
+Frontend:

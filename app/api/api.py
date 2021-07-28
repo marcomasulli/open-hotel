@@ -132,3 +132,8 @@ def set_availability(
 def read_availability_by_room_id(room_id: int, db: Session = Depends(get_db)):
     rateplans = crud.get_room_availability(db, room_id=room_id)
     return rateplans
+
+@api.get("/availability/", response_model=List[schemas.Availability])
+def read_availability(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    availability = crud.get_availability(db, skip=skip, limit=limit)
+    return availability
