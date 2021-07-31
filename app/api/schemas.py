@@ -41,7 +41,7 @@ class AgentCreate(AgentBase):
 
 class Agent(AgentBase):
     id: int
-    agent_is_active: bool
+    is_active: bool
     
     class Config:
         orm_mode = True
@@ -71,7 +71,7 @@ class HotelCreate(HotelBase):
 
 class Hotel(HotelBase):
     id: int
-    hotel_is_active: bool
+    is_active: bool
     
     class Config:
         orm_mode = True
@@ -96,7 +96,7 @@ class RoomCreate(RoomBase):
 class Room(RoomBase):
     id: int
     hotel_id: int
-    room_is_active: bool
+    is_active: bool
 
     class Config:
         orm_mode = True
@@ -115,7 +115,7 @@ class RatePlan(RatePlanBase):
     id: int
     hotel_id: int
     room_id: int
-    rate_is_active: bool
+    is_active: bool
 
     class Config:
         orm_mode = True

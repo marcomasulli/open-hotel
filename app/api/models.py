@@ -24,7 +24,7 @@ class Agent(Base):
     agent_phone = Column(String)
     agent_email = Column(String)
     agent_contact_person = Column(String)
-    agent_is_active = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
     agent_type = Column(String)
     agent_model = Column(String)
     agent_commission = Column(Float)
@@ -47,11 +47,9 @@ class Hotel(Base):
     hotel_contact_person = Column(String)
     hotel_contact_phone = Column(String)
     hotel_contact_email = Column(String)
-    hotel_is_active = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
 
-    rooms = relationship("Room", back_populates="hotels")
-    rateplans = relationship("RatePlan", back_populates="hotels")
-    availability = relationship("Availability", back_populates="hotels")
+    rooms = relationship('Room', back_populates='hotel')
 
 class Room(Base):
     __tablename__ = "rooms"
@@ -66,35 +64,32 @@ class Room(Base):
     room_max_adults = Column(Integer)
     room_max_children = Column(Integer)
     room_max_infants = Column(Integer)
-    room_is_active = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
 
-    hotel = relationship("Hotel", back_populates="rooms")
-    rateplans = relationship("RatePlan", back_populates="rooms")
-    availability = relationship("Availability", back_populates="rooms")
+    hotel = relationship('Hotel', back_populates='rooms')
+    rateplans = relationship('RatePlan', back_populates='room')
+    availability = relationship('Availability', back_populates='room')
 class RatePlan(Base):
-    __tablename__ = "rates"
+    __tablename__ = "rateplans"
 
     id = Column(Integer, primary_key=True, index=True)
-    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
     room_id = Column(Integer, ForeignKey("rooms.id"), index=True)
     valid_from = Column(DateTime)
     valid_to = Column(DateTime)
     rate = Column(Float)
-    rate_is_active = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
     
-    hotel = relationship("Hotel", back_populates="rates")
-    room = relationship("Room", back_populates="rates")
+    room = relationship('Room', back_populates='rateplans')
+
 class Availability(Base):
     __tablename__ = "availability"
 
     id = Column(Integer, primary_key=True, index=True)
-    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
     room_id = Column(Integer, ForeignKey("rooms.id"), index=True)
     valid_from = Column(DateTime)
     valid_to = Column(DateTime)
     total_rooms = Column(Integer)
     remaining_rooms = Column(Integer)
-    is_open = Column(Boolean)
+    is_open = Column(Boolean, default=False)
 
-    hotel = relationship("Hotel", back_populates="availability")
-    room = relationship("Room", back_populates="availability")
+    room = relationship('Room', back_populates='availability')
