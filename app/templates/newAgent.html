@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %} Agents {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      New Agent
+    </p>
+  </div>
+</section>
+
+{% with messages = get_flashed_messages() %} '
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      {% if 'successfully' in message.split(' ') %}
+      <article class="message is-success">
+        <div class="message-header">
+          <p>Success</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article> 
+      {% else %}
+      <article class="message is-danger">
+        <div class="message-header">
+          <p>Errors</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article>
+      {% endif %}
+    {% endfor %}
+  </div>  
+  {% endif %}
+  <br>
+{% endwith %} 
+
+<div class="container">
+    {% if agent_form %}
+    <form class="vertical" method="POST" action="./newAgent">
+      {{ agent_form.csrf_token }}
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_name(class="input", type="text", placeholder="Agent Name") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_address(class="input", type="text", placeholder="Address") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_country(class="input", type="text", placeholder="Country") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_province(class="input", type="text", placeholder="Province") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_location(class="input", type="text", placeholder="Location") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_phone(class="input", type="tel", placeholder="Phone") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_email(class="input", type="email", placeholder="Agent Email") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_contact_person(class="input", type="text", placeholder="Contact Person") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_type(class="input", type="text", placeholder="Travel Agent, OTA, Consortia...") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_model(class="select is-fullwidth") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_commission(class="input", type="text", placeholder="Commission") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.agent_discount(class="input", type="text", placeholder="Discount") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.is_active(type="checkbox") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ agent_form.submit(class="button is-primary") }}
+        </div>
+      </div>
+    </form> 
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No Agent Form</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        There seems to be an <strong>issue</strong> here, are you sure everything is in order?
+      </div>
+    </article>
+    {% endif %}
+</div>
+
+{% endblock %}
