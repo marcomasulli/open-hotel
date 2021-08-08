@@ -2,7 +2,7 @@ from flask import escape, request, render_template, flash, url_for, redirect
 import requests
 from .. import flask_app
 from ..config import Config
-from .forms import AgentForm
+from .forms import AgentForm, UserForm
 from copy import deepcopy
 import json
 from urllib.parse import urljoin
@@ -38,7 +38,7 @@ def view_agents():
         agents = None
     return render_template('agents.html', agents=agents)
 
-@flask_app.route("/newAgent", methods=["GET", "POST"])
+@flask_app.route("/agent/new", methods=["GET", "POST"])
 def create_agent():
 
     agent_form = AgentForm(request.form)
@@ -65,9 +65,44 @@ def create_agent():
 
         return redirect(url_for('create_agent'))
 
-    return render_template('newAgent.html', agent_form=agent_form)
+    return render_template('formAgent.html', agent_form=agent_form)
 
-        
+# Users   
+
+@flask_app.route("/users", methods=["GET"])
+def view_users():
+    try:
+        users = requests.get(urljoin(Config.LOCAL_URL, 'users')).json()
+    except:
+        users = None
+    return render_template('users.html', users=users)  
+
+@flask_app.route("/user/new", methods=["GET", "POST"])
+def create_user():
+
+    user_form = UserForm(request.form)
+
+    if request.method == 'POST':
+
+        if user_form.validate_on_submit():
+            new_user = user_form.data
+            new_user.pop('csrf_token')
+            # temp fix - will extend json encoder like https://stackoverflow.com/questions/52319562/django-object-of-type-decimal-is-not-json-serializable-and-convert-to-model-da/52319674
+            post_user = requests.post(urljoin(Config.LOCAL_URL, 'users'), data=json.dumps(new_user))
+            
+            if post_user.status_code == 200:
+                flash('You successfully created a new user!')
+            else:
+                flash('There was an error with your submission.')
+                flash(post_user.text)
+
+        else:
+            print(user_form.errors)
+            flash(str(user_form.errors))
+
+        return redirect(url_for('create_user'))
+
+    return render_template('formUser.html', user_form=user_form)
 
 @flask_app.route("/rateplans", methods=["GET"])
 def view_rateplans():

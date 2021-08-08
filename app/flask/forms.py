@@ -36,3 +36,13 @@ class AgentForm(Form):
     agent_discount=DecimalField(validators=[Optional()])
     is_active=BooleanField()
     submit=SubmitField()
+
+class UserForm(Form):
+    email=StringField()
+    password=PasswordField()
+    is_active=BooleanField()
+    submit=SubmitField()
+
+
+class HotelForm(Form):
+    pass

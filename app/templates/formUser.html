@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %} Users {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      New User
+    </p>
+  </div>
+</section>
+
+{% with messages = get_flashed_messages() %} '
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      {% if 'successfully' in message.split(' ') %}
+      <article class="message is-success">
+        <div class="message-header">
+          <p>Success</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article> 
+      {% else %}
+      <article class="message is-danger">
+        <div class="message-header">
+          <p>Errors</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article>
+      {% endif %}
+    {% endfor %}
+  </div>  
+  {% endif %}
+  <br>
+{% endwith %} 
+
+<div class="container">
+    {% if user_form %}
+    <form class="vertical" method="POST" action="./new">
+      {{ user_form.csrf_token }}
+      <div class="field">
+        <div class="control">
+          {{ user_form.email(class="input", type="email", placeholder="User Email") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ user_form.password(class="input", type="password", placeholder="Password") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ user_form.is_active(type="checkbox") }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ user_form.submit(class="button is-primary") }}
+        </div>
+      </div>
+    </form> 
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No User Form</p>
+      </div>
+      <div class="message-body">
+        There seems to be an <strong>issue</strong> here, are you sure everything is in order?
+      </div>
+    </article>
+    {% endif %}
+</div>
+
+{% endblock %}
