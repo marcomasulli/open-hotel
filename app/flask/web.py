@@ -12,14 +12,6 @@ from urllib.parse import urljoin
 def home():
     return render_template('home.html')
 
-@flask_app.route("/hotels", methods=["GET"])
-def view_hotels():
-    try:
-        hotels = requests.get(urljoin(Config.LOCAL_URL, 'hotels')).json()
-    except:
-        hotels = None
-    return render_template('hotels.html', hotels=hotels)
-
 @flask_app.route("/rooms", methods=["GET"])
 def view_rooms():
     try:
@@ -103,6 +95,16 @@ def create_user():
         return redirect(url_for('create_user'))
 
     return render_template('formUser.html', user_form=user_form)
+
+# Hotels
+
+@flask_app.route("/hotels", methods=["GET"])
+def view_hotels():
+    try:
+        hotels = requests.get(urljoin(Config.LOCAL_URL, 'hotels')).json()
+    except:
+        hotels = None
+    return render_template('hotels.html', hotels=hotels)
 
 @flask_app.route("/rateplans", methods=["GET"])
 def view_rateplans():

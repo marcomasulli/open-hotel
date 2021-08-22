@@ -47,9 +47,15 @@ class Hotel(Base):
     hotel_contact_person = Column(String)
     hotel_contact_phone = Column(String)
     hotel_contact_email = Column(String)
+    hotel_code = Column(String)
+    hotel_chain_code = Column(String)
+    hotel_brand_code = Column(String)
+    hotel_city_code = Column(String)
     is_active = Column(Boolean, default=True)
 
     rooms = relationship('Room', back_populates='hotel')
+    hotel_info = relationship('HotelInfo', back_populates='hotel')
+
 
 class Room(Base):
     __tablename__ = "rooms"
@@ -57,6 +63,7 @@ class Room(Base):
     id = Column(Integer, primary_key=True, index=True)
     hotel_id = Column(Integer, ForeignKey("hotels.id"))
     room_name = Column(String, index=True)
+    room_quantity = Column(Integer)
     room_description = Column (String)
     room_min_occupancy = Column(Integer)
     room_max_occupancy = Column(Integer)
@@ -64,11 +71,16 @@ class Room(Base):
     room_max_adults = Column(Integer)
     room_max_children = Column(Integer)
     room_max_infants = Column(Integer)
+    min_rate = Column(Float)
+    max_rate = Column(Float)
+    fixed_rate = Column(Float)
+    rate_time_unit =  Column(String)
     is_active = Column(Boolean, default=True)
 
     hotel = relationship('Hotel', back_populates='rooms')
     rateplans = relationship('RatePlan', back_populates='room')
     availability = relationship('Availability', back_populates='room')
+
 class RatePlan(Base):
     __tablename__ = "rateplans"
 
@@ -93,3 +105,48 @@ class Availability(Base):
     is_open = Column(Boolean, default=False)
 
     room = relationship('Room', back_populates='availability')
+
+class HotelInfo(Base):
+    __tablename__ = "hotel_info"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
+    currency_code = Column(String, index=True)
+    currency_code_decimal_places = Column(Integer)
+    hotel_pms_system = Column(String)
+    location_category = Column(String)
+    segment_category = Column(String)
+    hotel_category = Column(String)
+    architectural_style = Column(String)
+    
+    hotel = relationship('Hotels', back_populates='hotel_info')
+
+class HotelServiceAmenitY(Base):
+    __tablename__ = "hotel_AMENITY"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
+
+class HotelServiceFacility(Base):
+    __tablename__ = "hotel_facility"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
+
+class HotelServiceMeetingRoom(Base):
+    __tablename__ = "hotel_meeting_room"
+
+    id = Column(Integer, primary_key=True, index=True)
+    hotel_id = Column(Integer, ForeignKey("hotels.id"), index=True)
+    service_name = Column(String)
+    room_name = Column(String)
+    room_capacity = Column(Integer)
+    room_access = Column(String)
+    room_level = Column(String)
+    room_proximity = Column(String)
+    room_type = Column(String)
+    room_measure_unit = Column(String)
+    room_width = Column(Integer)
+    room_height = Column(Integer)
+    room_area = Column(Integer)
+    room_length = Column(Integer)
