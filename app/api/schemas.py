@@ -55,7 +55,7 @@ class HotelBase(BaseModel):
     hotel_country: str
     hotel_province: str
     hotel_location: str
-    hotel_rooms: Optional[str] = None
+    hotel_rooms: Optional[int] = None
     hotel_latitude: Optional[str] = None
     hotel_longitude: Optional[str] = None
     hotel_phone: str

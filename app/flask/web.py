@@ -2,7 +2,7 @@ from flask import escape, request, render_template, flash, url_for, redirect
 import requests
 from .. import flask_app
 from ..config import Config
-from .forms import AgentForm, UserForm
+from .forms import AgentForm, UserForm, HotelForm
 from copy import deepcopy
 import json
 from urllib.parse import urljoin
@@ -105,6 +105,34 @@ def view_hotels():
     except:
         hotels = None
     return render_template('hotels.html', hotels=hotels)
+
+@flask_app.route("/hotel/new", methods=["GET", "POST"])
+def create_hotel():
+    hotel_form = HotelForm(request.form)
+
+    if request.method == 'POST':
+
+        if hotel_form.validate_on_submit():
+            new_hotel = hotel_form.data
+            new_hotel.pop('csrf_token')
+            # temp fix - will extend json encoder like https://stackoverflow.com/questions/52319562/django-object-of-type-decimal-is-not-json-serializable-and-convert-to-model-da/52319674
+            post_hotel = requests.post(urljoin(Config.LOCAL_URL, 'hotels'), data=json.dumps(new_hotel))
+            
+            if post_hotel.status_code == 200:
+                flash('You successfully created a new hotel!')
+            else:
+                flash('There was an error with your submission.')
+                flash(post_hotel.text)
+
+        else:
+            print(hotel_form.errors)
+            flash(str(hotel_form.errors))
+
+        return redirect(url_for('create_hotel'))
+
+    return render_template('formHotel.html', hotel_form=hotel_form)
+
+# RatePlans
 
 @flask_app.route("/rateplans", methods=["GET"])
 def view_rateplans():

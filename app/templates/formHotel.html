@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block title %} New Hotel {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      New Hotel
+    </p>
+  </div>
+</section>
+
+{% with messages = get_flashed_messages() %} '
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      {% if 'successfully' in message.split(' ') %}
+      <article class="message is-success">
+        <div class="message-header">
+          <p>Success</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article> 
+      {% else %}
+      <article class="message is-danger">
+        <div class="message-header">
+          <p>Errors</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article>
+      {% endif %}
+    {% endfor %}
+  </div>  
+  {% endif %}
+  <br>
+{% endwith %} 
+
+<div class="container">
+    {% if hotel_form %}
+    <form class="vertical" method="POST" action="./new">
+      {{ hotel_form.csrf_token }}
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Hotel Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_name(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Hotel Address</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_address(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Country</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_country(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Province</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_province(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Location</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_location(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Rooms</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_rooms(class="input", type="number")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Latitude</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_latitude(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Longitude</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_longitude(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Phone</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_phone(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Email</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_email(class="input", type="email")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Contact Person</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_contact_person(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Contact Phone</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_contact_phone(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Contact Email</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_contact_email(class="input", type="email")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Hotel Code</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_code(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Chain Code</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_chain_code(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Brand Code</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.hotel_brand_code(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Is Active</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_form.is_active(type="checkbox")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label"></label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{ hotel_form.submit(class="button is-success") }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form> 
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No Agent Form</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        There seems to be an <strong>issue</strong> here, are you sure everything is in order?
+      </div>
+    </article>
+    {% endif %}
+  <br>
+</div>
+
+{% endblock %}

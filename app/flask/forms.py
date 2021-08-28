@@ -45,4 +45,22 @@ class UserForm(Form):
 
 
 class HotelForm(Form):
-    pass
+    hotel_name = StringField()
+    hotel_address = StringField()
+    hotel_country = StringField()
+    hotel_province = StringField()
+    hotel_location = StringField()
+    hotel_rooms = IntegerField(validators=[Optional()])
+    hotel_latitude = StringField(validators=[Optional()])
+    hotel_longitude = StringField(validators=[Optional()])
+    hotel_phone = StringField()
+    hotel_email = StringField()
+    hotel_contact_person = StringField(validators=[Optional()])
+    hotel_contact_phone = StringField(validators=[Optional()])
+    hotel_contact_email = StringField(validators=[Optional()])
+    hotel_code = StringField(validators=[Optional()])
+    hotel_chain_code = StringField(validators=[Optional()])
+    hotel_brand_code = StringField(validators=[Optional()])
+    hotel_city_code = StringField(validators=[Optional()])
+    is_active = BooleanField()
+    submit = SubmitField()
