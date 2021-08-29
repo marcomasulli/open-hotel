@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %} Hotel Info {% endblock %}
+
+{% block content %}
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      Hotel Info
+    </p>
+  </div>
+</section>
+
+{% with messages = get_flashed_messages() %} '
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      {% if 'successfully' in message.split(' ') %}
+      <article class="message is-success">
+        <div class="message-header">
+          <p>Success</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article> 
+      {% else %}
+      <article class="message is-danger">
+        <div class="message-header">
+          <p>Errors</p>
+        </div>
+        <div class="message-body">  
+            {{ message }}
+        </div>
+      </article>
+      {% endif %}
+    {% endfor %}
+  </div>  
+  {% endif %}
+  <br>
+{% endwith %} 
+
+<div class="container">
+    {% if hotel_info_form %}
+    <form class="vertical" method="POST" action="./info">
+      {{ hotel_info_form.csrf_token }}
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Currency Code</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.currency_code(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Currency Decimal Places</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.currency_code_decimal_places(class="input", type="number")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">PMS System</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.hotel_pms_system(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Location Category</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.location_category(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Segment Category</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.segment_category(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Hotel Category</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.hotel_category(class="input", type="number")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Architectural Style</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{hotel_info_form.architectural_style(class="input", type="text")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label"></label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              {{ hotel_info_form.submit(class="button is-success") }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form> 
+    {% else %}
+    <br>
+    <article class="message is-warning">
+      <div class="message-header">
+        <p>No Agent Form</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        There seems to be an <strong>issue</strong> here, are you sure everything is in order?
+      </div>
+    </article>
+    {% endif %}
+  <br>
+</div>
+
+{% endblock %}

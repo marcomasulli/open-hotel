@@ -42,7 +42,7 @@ def create_agent(db: Session, agent: schemas.AgentCreate):
 
 # Hotels
 
-def get_hotel_by_name(db: Session, hotel_name: int):
+def get_hotel_by_name(db: Session, hotel_name: str):
     return db.query(models.Hotel).filter(models.Hotel.hotel_name == hotel_name).first()
 
 def get_hotels(db: Session, skip: int = 0, limit: int = 100):
@@ -54,6 +54,18 @@ def create_hotel(db: Session, hotel: schemas.HotelCreate):
     db.commit()
     db.refresh(db_hotel)
     return db_hotel
+
+# Hotel Info
+
+def get_hotel_info_by_id(db: Session, hotel_id: int):
+    return db.query(models.Hotel).filter(models.HotelInfo.hotel_id == hotel_id).first()
+
+def post_hotel_info(db: Session, hotel_info: schemas.HotelInfoCreate):
+        db_hotel_info = models.HotelInfo(**hotel_info.dict())
+        db.add(db_hotel_info)
+        db.commit()
+        db.refresh(db_hotel_info)
+        return db_hotel_info
 
 # Rooms
 

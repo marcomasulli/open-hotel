@@ -64,3 +64,20 @@ class HotelForm(Form):
     hotel_city_code = StringField(validators=[Optional()])
     is_active = BooleanField()
     submit = SubmitField()
+
+class HotelFormEdit(HotelForm):
+    hotel_id = IntegerField()
+
+class HotelInfoForm(Form):
+    hotel_id = IntegerField()
+    currency_code = StringField()
+    currency_code_decimal_places = IntegerField()
+    hotel_pms_system = StringField(validators=[Optional()])
+    location_category = StringField(validators=[Optional()])
+    segment_category = StringField(validators=[Optional()])
+    hotel_category = StringField(validators=[Optional()])
+    architectural_style = StringField(validators=[Optional()])
+    submit=SubmitField()
+
+class HotelInfoEdit(HotelInfoForm):
+    info_id = IntegerField()

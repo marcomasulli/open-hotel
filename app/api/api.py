@@ -83,6 +83,18 @@ def read_hotels(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     hotels = crud.get_hotels(db, skip=skip, limit=limit)
     return hotels
 
+# Hotel Info
+
+@api.get("/hotel/{hotel_id}/info", response_model=List[schemas.HotelInfo])
+def read_hotel_info(hotel_id: int, db: Session = Depends(get_db)):
+    hotel_info = crud.get_hotel_info_by_id(db, hotel_id=hotel_id)
+    return hotel_info
+
+@api.post("/hotel/{hotel_id}/info", response_model=schemas.HotelInfo)
+def create_hotel_info(
+    hotel_info: schemas.HotelInfoCreate, db: Session = Depends(get_db)
+):  
+    return crud.post_hotel_info(db=db, hotel_info=hotel_info)
 
 # Rooms
 

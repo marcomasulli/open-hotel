@@ -12,37 +12,47 @@
   </div>
 </section>
 <div class="container" style="overflow-x: auto; white-space: nowrap;">
-    {% if hotels %}
-    <table class="table">
-      <thead>
-        <tr>
-          {% for column in hotels[0].keys() %}  
-          <th> {{ column }} </th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for hotel in hotels %}
-        <tr>
-          {% for value in hotel.values() %}
-           <td> {{ value }} </td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <br>
-    <article class="message is-warning">
-      <div class="message-header">
-        <p>No Hotel</p>
-        <button class="delete" aria-label="delete"></button>
-      </div>
-      <div class="message-body">
-        There seems to be <strong>no Hotel</strong> here, are you sure you do not need to create a new one?
-      </div>
-    </article>
-    {% endif %}
+  {% if hotels %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Hotel Name</th>
+        <th>Address</th>
+        <th>Country</th>
+        <th>Province</th>
+        <th>Location</th>
+        <th>Rooms</th>
+        <th>Info</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hotel in hotels %}
+      <tr>
+        <td>{{ hotel.get("hotel_name") }}</td>
+        <td>{{ hotel.get("hotel_address") }}</td>
+        <td>{{ hotel.get("hotel_country") }}</td>
+        <td>{{ hotel.get("hotel_province") }}</td>
+        <td>{{ hotel.get("hotel_location") }}</td>
+        <td>{{ hotel.get("hotel_rooms") }}</td>
+        <td><button class="button is-info">Info</button></td>
+        <td><button class="button is-link">Edit</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <br>
+  <article class="message is-warning">
+    <div class="message-header">
+      <p>No Hotel</p>
+      <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body">
+      There seems to be <strong>no Hotel</strong> here, are you sure you do not need to create a new one?
+    </div>
+  </article>
+  {% endif %}
 </div>
 
 {% endblock %}
